@@ -69,7 +69,7 @@ spaced --chain test --block-index --bitcoin-rpc-user test --bitcoin-rpc-password
 Install dependencies:
 
 ``` bash
-cd spacesprotocol-indexer
+cd indexer
 npm install
 ```
 
@@ -96,7 +96,7 @@ docker compose up -d
 Create the database schema: 
 
 ```bash
-cd spacesprotocol-indexer
+cd indexer
 npx drizzle-kit push
 ```
 
