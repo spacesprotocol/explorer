@@ -160,3 +160,9 @@ Check if it is running:
 ```bash
 pm2 status
 ```
+
+Open the explorer in a browser:
+
+```
+http://localhost:3000
+```
