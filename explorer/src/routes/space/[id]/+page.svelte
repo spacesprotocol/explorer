@@ -167,11 +167,11 @@
                 </li>
               {/if}
               <li class="border-b border-b-gray-400 light:border-gray-200 pb-2">
-                <span class="text-sm text-gray-500 light:text-gray-600">Current owner:</span> <a target="_blank" href="https://mempool.space/testnet/address/{currentOwner}" class="text-[#ec8e32] hover:text-orange-700 break-words">{currentOwner}</a>
+                <span class="text-sm text-gray-500 light:text-gray-600">Current owner:</span> <a target="_blank" href="https://mempool.space/{PUBLIC_BTC_NETWORK=="testnet4"?"testnet4/":""}address/{currentOwner}" class="text-[#ec8e32] hover:text-orange-700 break-words">{currentOwner}</a>
               </li>
               <li class="border-b border-b-gray-400 light:border-gray-200 pb-2">
                 <span class="text-sm text-gray-500 light:text-gray-600">Outpoint:</span>
-                <a target="_blank" href="https://mempool.space/testnet/tx/{outpoint?.split(':')[0]}#vout={outpoint?.split(':')[1]}" class="text-[#ec8e32] hover:text-orange-700 break-words">{outpoint}</a>
+                <a target="_blank" href="https://mempool.space/{PUBLIC_BTC_NETWORK=="testnet4"?"testnet4/":""}tx/{outpoint?.split(':')[0]}#vout={outpoint?.split(':')[1]}" class="text-[#ec8e32] hover:text-orange-700 break-words">{outpoint}</a>
               </li>
               {#if space.status == 'registered'}
                 <li class="border-b border-b-gray-400 light:border-gray-200 pb-2 flex flex-wrap items-center gap-2">

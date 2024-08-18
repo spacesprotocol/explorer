@@ -6,6 +6,7 @@
   import { goto } from "$app/navigation";
   import { browser } from '$app/environment'; 
   import ThemeToggle from "$lib/components/ThemeToggle.svelte";
+  import { PUBLIC_BTC_NETWORK } from "$env/static/public";
   let search = "";
   let timeout: any;
   let searching = false;
@@ -72,6 +73,9 @@
   });
 </script>
 
+{#if PUBLIC_BTC_NETWORK=="testnet4"}
+        <div class="justify-center" style="background-color:red;color:white;text-align:center;display:block;">Spaces is currently on Testnet4</div>
+{/if}
 <div class="shadow-sm mb-10 flex justify-center">
   <div class="container flex p-2 px-2 md:px-10 items-center gap-2 md:gap-5">
     <a href="/" class="flex items-center shrink-0">
