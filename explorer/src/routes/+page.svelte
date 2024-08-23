@@ -47,7 +47,7 @@
             class="group hover:z-10 relative group flex flex-col py-7 gap-2 rounded-3xl border border-b-8 border-primary w-[220px] cursor-pointer text-primary hover:bg-primary hover:text-primary-content hover:sc1ale-110 bg-base-100 transition-transform duration-300"
           >
             <div class="px-4 flex flex-col gap-2">
-              <span class="text-lg light:text-primary-content text-gray-400 font-semibold tracking-wider">{space.name}</span>
+              <span title={space.name} class="text-lg light:text-primary-content text-gray-400 font-semibold tracking-wider truncate">{space.name}</span>
               {#if space.claimHeight > currentBlockHeight}
                 <div class="flex gap-2 items-center text-gray-600 group-hover:text-primary-content text-sm">
                   Ends in:
