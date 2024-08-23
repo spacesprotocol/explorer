@@ -222,7 +222,7 @@ async function sync() {
         startTime = performance.now();
 
         const last_sync = (await db.select().from(syncs).orderBy(desc(syncs.endBlockHeight)).limit(1))?.[0];
-        let height = last_sync?.endBlockHeight ? (last_sync.endBlockHeight + 1) : process.env.SPACES_STARTING_BLOCKHEIGHT;
+        let height = last_sync?.endBlockHeight ? (last_sync.endBlockHeight + 1) : Number(process.env.SPACES_STARTING_BLOCKHEIGHT);
         startBlockHeight = height;
 
         const bitcoinClient = new SimpleRpcClient(process.env.BITCOIN_RPC_URL, process.env.BITCOIN_RPC_USER, process.env.BITCOIN_RPC_PASSWORD);
