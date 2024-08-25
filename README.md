@@ -93,7 +93,7 @@ To run it via Docker run the following command from the root directory, i.e. the
 docker compose up -d
 ```
 
-Create the database schema: 
+Create the database schema:
 
 ```bash
 cd indexer
