@@ -148,21 +148,33 @@ If needed, make changes to the `.env` file but if you fully followed this guide 
 
 ### Run the explorer
 
-Run the Explorer using `pm2`:
+You can start the explorer directly in the terminal or make it run in the background using `pm2` and have it running even when you exit the terminal.
+
+To start it in the terminal run:
+
+```bash
+npm run dev
+```
+
+Then you can open the browser at: `http://localhost:5173/`
+
+To run it via `pm2` make sure to first install `pm2`:
+
+```bash
+npm i -g pm2
+```
+
+Then build the app and run it:
 
 ```bash
 npm run build
 pm2 start build/server.js
 ```
 
-Check if it is running:
+Make sure it's running:
 
 ```bash
 pm2 status
 ```
 
-Open the explorer in a browser:
-
-```
-http://localhost:3000
-```
+You can then open the explorer in a browser: `http://localhost:3000`
