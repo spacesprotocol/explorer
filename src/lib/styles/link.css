@@ -1,0 +1,12 @@
+.mono-link {
+    color: #6c757d;
+    text-decoration: none;
+    font-family: monospace;
+    font-size: inherit;
+    transition: color 0.3s ease-in-out;
+    word-break: break-all;
+}
+
+.mono-link:hover {
+    color: #fd7e14;
+}

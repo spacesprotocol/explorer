@@ -1,13 +1,16 @@
 version: '3.8'
 
 services:
-  db:
-    image: postgres:16.3
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: spacesprotocol_explorer
+  web:
+    build: .
     ports:
-      - "5432:5432"
-    volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - "3000:3000"
+    environment:
+      - DB_URL=${DB_URL}
+      - PUBLIC_BTC_NETWORK=${PUBLIC_BTC_NETWORK}
+    networks:
+      - spacesprotocol-explorer
+
+networks:
+  spacesprotocol-explorer:
+    external: true

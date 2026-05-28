@@ -1,0 +1,15 @@
+User-agent: *
+# Set strict crawl delay
+Crawl-delay: 10
+
+# Allow only main page
+Allow: /$
+
+# Disallow everything else
+Disallow: /api/
+Disallow: /tx/
+Disallow: /space/
+Disallow: /address/
+Disallow: /actions/
+Disallow: /auctions/
+Disallow: /*

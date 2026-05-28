@@ -1,0 +1,8 @@
+@import 'variables.css';
+
+/* Action Type Styles */
+/* Used for displaying Spaces Protocol action types: RESERVE, BID, TRANSFER, ROLLOUT, REVOKE */
+.action-type {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+}

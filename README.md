@@ -1,180 +1,85 @@
-# SpacesProtocol Explorer & Indexer
+# Spaces Protocol Explorer
 
-This is a monorepo containing two projects located in the `explorer` and `indexer` directories.
+A web block explorer for the [Spaces Protocol](https://explorer.spacesprotocol.org). Browse blocks, transactions, spaces, auctions, space pointers.
+Frontend gets data only from the database, it doesn't connect to a bitcoin node, neither to a space daemon.
 
-## Indexer
+It's possible to browse mempool transactions (however without `sptr` data, it will be added once `getsptrpackage` or
+something similar is added to spaced).
 
-Indexer is a  script written in TypeScript that runs every minute and fetches new blocks from `bitcoind` daemon, queries `spaced` for information about the fetched blocks and writes the relevant information to the database.
+## Tech Stack
 
-### Prerequisites
+- **Framework**: SvelteKit 2 with Svelte 5
+- **Database**: PostgreSQL, it imports drizzle ORM, however it only uses raw SQL queries (for perfomance reason)
+- **Styling**: TailwindCSS + DaisyUI
+- **Runtime**: Node.js
 
-Make sure to install:
 
-- Bitcoin Core: <https://bitcoincore.org/en/download/>
-- Rust: <https://www.rust-lang.org/tools/install>
+## Prerequisites
 
-### Testnet sync
+- Node.js 18+
+- PostgreSQL database with spaces protocol data
 
-After installing Bitcoin Core, create a directory for Bitcoin testnet data:
+For the actual schema, please refer to the [indexer repository](http://github.com/spacesprotocol/indexer).
 
-```bash
-mkdir $HOME/bitcoin-testnet
+## Setup
 
-# Create a configuration file with RPC credentials
-echo "rpcuser=test" > $HOME/bitcoin-testnet/bitcoin.conf
-echo "rpcpassword=test" >> $HOME/bitcoin-testnet/bitcoin.conf
+1. Clone the repository
 
-# Start Bitcoin Core in testnet mode
-bitcoind -testnet -datadir=$HOME/bitcoin-testnet
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Spaces protocol is activated on Bitcoin testnet block `2865460` - wait for bitcoind to sync up to that block before proceeding.
+3. Configure environment variables:
+   ```bash
+   cp .env.example .env
+   ```
 
-### Install spaced
+   Edit `.env.local`:
+   ```
+   DB_URL=postgres://user:password@localhost/spaces_protocol_explorer
+   PUBLIC_BTC_NETWORK=testnet4   # or mainnet
+   MARKETPLACE_URI=https://spaces.market
+   ```
 
-spaced is a tiny layer on top of Bitcoin Core allowing you to interact with Spaces. To compile spaced, you need to install Rust and then
+   MARKETPLACE_URI is used in conjunction with spaces marketplace to show the users whether a particular space is on the
+   secondary market.
+   Consult [spaces protocol secondary marketplace repository](https://github.com/spaceprotocol/marketplace) for the
+   exact API used.
 
-```bash
-# Clone the repository
-git clone https://github.com/spacesprotocol/spaced && cd spaced
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-# Build the release version
-cargo build --release
+   The app will be available at http://localhost:5173
 
-# Install the binaries
-cargo install --path node
+## Production
 
-# Ensure Cargo's bin directory is in your PATH
-echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-Verify you have spaced and space-cli installed:
-
-```bash
-spaced --version
-space-cli --version
-```
-
-### Connect to Bitcoin Core
-
-Make sure to run `spaced` with block indexing enabled:
-
-```bash
-spaced --chain test --block-index --bitcoin-rpc-user test --bitcoin-rpc-password test
-```
-
-### Preparing the Indexer
-
-Install dependencies:
-
-``` bash
-cd indexer
-npm install
-```
-
-Create an `.env` file:
-
-```bash
-cp .env.example .env
-```
-
-If needed, make changes to the `.env` file but if you fully followed this guide everything should work with the default values.
-
-### Setting up Postgres database
-
-Same database is used by both the Explorer and the Indexer.
-
-You can start the database using Docker or set up your own database.
-
-To run it via Docker run the following command from the root directory, i.e. the directory where the `docker-compose.yml` is located:
-
-```bash
-docker compose up -d
-```
-
-Create the database schema:
-
-```bash
-cd indexer
-npx drizzle-kit push
-```
-
-### Starting the Indexer
-
-You can start the indexer directly in the terminal or make it run in the background using `pm2` and have it running even when you exit the terminal.
-
-To start it in the terminal run:
-
-```bash
-npm run start
-```
-
-To run it via `pm2` make sure to first install `pm2`:
-
-```bash
-npm i -g pm2
-```
-
-Then build the app and run it:
-
+Build and run:
 ```bash
 npm run build
-pm2 start dist/index.js
+node build/server.js
 ```
 
-Make sure it's running:
+The server runs on port 3000 by default.
 
-```bash
-pm2 status
-```
+Consider using docker for the production setup.
 
-## Explorer
+## Notes
 
-### Install dependencies
+Type definitions might be out of date.
 
-```bash
-cd explorer
-npm install
-```
+Some CSS styling is inconsistent and redefined and per page basis. 
 
-### Add an `.env` file
+Same stands for the code style: use your own linter settings.
 
-```bash
-cp .env.example .env
-```
+Previously the explorer indexed the whole blockchain data from the genesis block, also it indexed the addresses,
+therefore some remnants of this structure might be present in the repository, despite them not being used live.
 
-If needed, make changes to the `.env` file but if you fully followed this guide everything should work with the default values.
+The routes can be found in `src/routes`, they contain both `api` routes and the frontend routes.
+Reusable components can be found in `src/lib/components`
 
-### Run the explorer
+## License
 
-You can start the explorer directly in the terminal or make it run in the background using `pm2` and have it running even when you exit the terminal.
-
-To start it in the terminal run:
-
-```bash
-npm run dev
-```
-
-Then you can open the browser at: `http://localhost:5173/`
-
-To run it via `pm2` make sure to first install `pm2`:
-
-```bash
-npm i -g pm2
-```
-
-Then build the app and run it:
-
-```bash
-npm run build
-pm2 start build/server.js
-```
-
-Make sure it's running:
-
-```bash
-pm2 status
-```
-
-You can then open the explorer in a browser: `http://localhost:3000`
+MIT

@@ -1,0 +1,74 @@
+.layout-container {
+    display: grid;
+    gap: var(--space-8);
+    padding: var(--space-4);
+    max-width: 1600px;
+    margin: 0 auto;
+    grid-template-areas:
+        "recent-actions"
+        "rollouts"
+        "auctions";
+    /* Prevent horizontal scroll */
+    width: 100%;
+    min-width: 0; /* Important for grid items */
+    overflow-x: hidden;
+}
+
+.recent-actions {
+    grid-area: recent-actions;
+    min-width: 0; /* Allow content to shrink */
+    width: 100%;
+}
+
+.rollouts-section {
+    grid-area: rollouts;
+    width: 100%;
+    min-width: 0;
+}
+
+.auctions-section {
+    grid-area: auctions;
+    width: 100%;
+    min-width: 0;
+}
+
+.grid-container {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    width: 100%;
+    min-width: 0;
+    padding: 0; /* Removed horizontal padding */
+}
+
+@media (min-width: 640px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .layout-container {
+        grid-template-columns: 360px minmax(0, 1fr); /* minmax(0, 1fr) prevents overflow */
+        grid-template-areas:
+            "recent-actions rollouts"
+            "recent-actions auctions";
+        gap: var(--space-8) var(--space-12);
+        padding: var(--space-8);
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1280px) {
+    .layout-container {
+        padding: var(--space-8) var(--space-16);
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
